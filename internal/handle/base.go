@@ -2,6 +2,7 @@ package handle
 
 import (
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"log/slog"
 	"my-gin-vue-blog/internal/global"
 	"net/http"
@@ -40,7 +41,7 @@ func ReturnError(c *gin.Context, r global.Result, data any) {
 	)
 }
 
-// TODO: 返回gorm对象
-//func GetDB(c *gin.Context) *gorm.DB {
-//
-//}
+// GetDB 从gin.Context中获取设置的*gorm.DB对象
+func GetDB(c *gin.Context) *gorm.DB {
+	return c.MustGet(global.CTX_DB).(*gorm.DB)
+}
