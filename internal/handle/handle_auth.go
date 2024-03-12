@@ -19,4 +19,6 @@ func (*UserAuth) Login(c *gin.Context) {
 		ReturnError(c, global.ErrRequest, err)
 		return
 	}
+
+	//db := GetDB(c)
 }
