@@ -38,4 +38,7 @@ func RegisterResult(code int, msg string) Result {
 
 var (
 	ErrRequest = RegisterResult(9001, "请求参数格式错误")
+	ErrDbOp    = RegisterResult(9004, "数据库操作异常")
+
+	ErrUserNotExist = RegisterResult(1003, "该用户不存在")
 )

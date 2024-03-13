@@ -1,8 +1,11 @@
 package handle
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"my-gin-vue-blog/internal/global"
+	"my-gin-vue-blog/internal/model"
 )
 
 type UserAuth struct {
@@ -20,5 +23,18 @@ func (*UserAuth) Login(c *gin.Context) {
 		return
 	}
 
-	//db := GetDB(c)
+	db := GetDB(c)
+	userAuth, err := model.GetUserAuthInfoByName(db, req.Username)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			ReturnError(c, global.ErrUserNotExist, nil)
+			return
+		}
+		// TODO: 什么情况下返回的data是error 什么情况下是对象
+		ReturnError(c, global.ErrDbOp, err)
+		return
+	}
+
+	// TODO: 接下来检查密码 加密
+	_ = userAuth
 }
