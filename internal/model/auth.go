@@ -1,6 +1,7 @@
 package model
 
 import (
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -14,4 +15,10 @@ type UserAuth struct {
 	LastLoginTime *time.Time `json:"last_login_time"` // 指针的意思？
 	IsDisable     bool       `json:"is_disable"`
 	IsSuper       bool       `json:"is_super"`
+}
+
+func GetUserAuthInfoByName(db *gorm.DB, name string) (*UserAuth, error) {
+	var userAuth UserAuth
+	result := db.Where(&UserAuth{Username: name}).First(&userAuth)
+	return &userAuth, result.Error
 }
