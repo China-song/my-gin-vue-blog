@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 	"my-gin-vue-blog/internal/global"
 	"my-gin-vue-blog/internal/model"
+	"my-gin-vue-blog/internal/utils"
 )
 
 type UserAuth struct {
@@ -36,5 +37,8 @@ func (*UserAuth) Login(c *gin.Context) {
 	}
 
 	// TODO: 接下来检查密码 加密
-	_ = userAuth
+	if !utils.BcryptCheck(userAuth.Password, req.Password) {
+		ReturnError(c, global.ErrPassword, nil)
+		return
+	}
 }
