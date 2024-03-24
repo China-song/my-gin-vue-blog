@@ -15,6 +15,11 @@ type Config struct {
 		DbAutoMigrate bool   // 是否自动迁移数据库表结构
 		DbLogMode     string // silent | error | warn | info
 	}
+	JWT struct {
+		Secret string
+		Expire int64
+		Issuer string
+	}
 	Mysql struct {
 		Host     string // 服务器地址
 		Port     string // 端口
@@ -25,6 +30,16 @@ type Config struct {
 	}
 	Sqlite struct {
 		Dsn string // Data Source Name
+	}
+	Redis struct {
+		DB       int    // 指定 Redis 数据库
+		Addr     string // 服务器地址:端口
+		Password string // 密码
+	}
+	Session struct {
+		Name   string
+		Salt   string
+		MaxAge int
 	}
 }
 

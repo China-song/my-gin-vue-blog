@@ -2,6 +2,10 @@ package global
 
 import "fmt"
 
+const (
+	SUCCESS = 0
+)
+
 type Result struct {
 	code int
 	msg  string
@@ -37,9 +41,17 @@ func RegisterResult(code int, msg string) Result {
 }
 
 var (
+	OkResult = RegisterResult(SUCCESS, "OK")
+)
+
+var (
 	ErrRequest = RegisterResult(9001, "请求参数格式错误")
 	ErrDbOp    = RegisterResult(9004, "数据库操作异常")
+	ErrRedisOp = RegisterResult(9005, "Redis 操作异常")
 
 	ErrPassword     = RegisterResult(1002, "密码不正确")
 	ErrUserNotExist = RegisterResult(1003, "该用户不存在")
+
+	ErrTokenCreate = RegisterResult(1205, "TOKEN 生成失败")
+	ErrPermission  = RegisterResult(1206, "权限不足")
 )

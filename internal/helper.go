@@ -1,6 +1,8 @@
 package ginblog
 
 import (
+	"context"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -66,4 +68,21 @@ func InitDatabase(conf *global.Config) *gorm.DB {
 	}
 
 	return db
+}
+
+// InitRedis 根据配置文件初始化 Redis
+func InitRedis(conf *global.Config) *redis.Client {
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     conf.Redis.Addr,
+		Password: conf.Redis.Password,
+		DB:       conf.Redis.DB,
+	})
+
+	_, err := rdb.Ping(context.Background()).Result()
+	if err != nil {
+		log.Fatal("Redis 连接失败: ", err)
+	}
+
+	log.Println("Redis 连接成功", conf.Redis.Addr, conf.Redis.DB, conf.Redis.Password)
+	return rdb
 }
