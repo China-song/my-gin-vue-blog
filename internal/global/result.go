@@ -54,4 +54,7 @@ var (
 
 	ErrTokenCreate = RegisterResult(1205, "TOKEN 生成失败")
 	ErrPermission  = RegisterResult(1206, "权限不足")
+
+	ErrTagHasArt  = RegisterResult(4003, "删除失败，标签下存在文章")
+	ErrCateHasArt = RegisterResult(3003, "删除失败，分类下存在文章")
 )

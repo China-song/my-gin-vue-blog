@@ -64,6 +64,22 @@ func ReturnError(c *gin.Context, r global.Result, data any) {
 	)
 }
 
+// PageQuery 分页获取数据
+// TODO: form struct tag 2024/03/24 22:54  表单的意思？
+type PageQuery struct {
+	Page    int    `form:"page_num"`  // 当前页数（从1开始）
+	Size    int    `form:"page_size"` // 每页条数
+	Keyword string `form:"keyword"`   // 搜索关键字
+}
+
+// PageResult list响应
+type PageResult[T any] struct {
+	Page  int   `json:"page_num"`  // TODO: 参数意义 2024/03/24 23:25
+	Size  int   `json:"page_size"` //
+	Total int64 `json:"total"`     // 总条数
+	List  []T   `json:"page_data"` // 分页数据
+}
+
 // GetDB 从gin.Context中获取设置的*gorm.DB对象
 func GetDB(c *gin.Context) *gorm.DB {
 	return c.MustGet(global.CTX_DB).(*gorm.DB)
